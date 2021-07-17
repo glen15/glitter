@@ -7,18 +7,19 @@ import React, { useState } from "react";
          const {target: {name, value}} = event;
          if (name === "email"){
              setEmail(value)
-         } else if (name === "password"){
+         } else if (name === "passwo rd"){
              setPassword(value)
          }
      }
      const onSubmit = (event) => {
-         event.preventDefault();
+         event.preventDefault(); // 이거 안하면, 로그인버튼 누를때마다 새로고침되고, email password에 적용한 리액트기능이 다 사라진다
+         //preventDefault() : 기본행위가 실행되는것 막기
      }
 
      return (
         <div>
             <form onSubmit={onSubmit}>
-                <input name="email" type="text" placeholder="Email" required value={email} onChange={onChange}/>
+                <input name="email" type="email" placeholder="Email" required value={email} onChange={onChange}/>
                 <input name="password" type="password" placeholder="Password" required value={password} onChange={onChange}/>
                 <input type="submit" value="Log In" />
             </form>
