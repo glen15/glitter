@@ -1,9 +1,15 @@
+import { dbService } from "fbase";
 import React, { useState } from "react";
 
 const Home = () => {
     const [gleet, setGleet] = useState("");
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => { //promise를 리턴하기 때문에 async 넣는다
         event.preventDefault(); //submit 클릭시 새로고침되는거 막으려고
+        await dbService.collection("gleets").add({
+            gleet, // === gleet:gleet 같아서 짧게 생략한것
+            createdAt: Date.now(),
+        });
+        setGleet(""); //submit 했으니 다시 비워주는 것
     };
     const onChange = (event) => {
         const { 
