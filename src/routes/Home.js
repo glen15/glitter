@@ -1,7 +1,8 @@
 import { dbService } from "fbase";
+import Gleet from "../components/Gleet";
 import React, { useEffect, useState } from "react";
 
-const Home = ({userObj}) => {
+const Home = ({ userObj }) => {
     const [gleet, setGleet] = useState("");
     const [gleets, setGleets] = useState([]);
     useEffect(() => {
@@ -37,9 +38,12 @@ const Home = ({userObj}) => {
         </form>
         <div>
             {gleets.map(gleet => (
-            <div key={gleet.id}>
-                <h4>{gleet.text}</h4>
-            </div>))}
+                <Gleet
+                key={gleet.id} 
+                gleetObj={gleet}
+                isOwner={gleet.creatorId === userObj.uid}
+                />
+            ))}
         </div>
     </div>
     )
