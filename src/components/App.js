@@ -6,11 +6,12 @@ function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); //currentUser 는 username또는 null 반환
   // props로 로그인상태를 <AppRouter>로 보내줘야한다
-
+  const [userObj, setUserObj] = useState(null);
   useEffect(()=> {
     authService.onAuthStateChanged((user) => {
       if(user) {
         setIsLoggedIn(true);
+        setUserObj(user)
       } else {
         setIsLoggedIn(false);
       }
@@ -19,7 +20,7 @@ function App() {
   }, []);
   return (
   <>
-    {init ? <AppRouter isLoggedIn={ isLoggedIn } />: "Initializing..."}
+    {init ? <AppRouter isLoggedIn={ isLoggedIn } userObj={ userObj } />: "Initializing..."}
     <footer>@copy; {new Date().getFullYear()} Glitter By glen</footer>
   </>
   )
