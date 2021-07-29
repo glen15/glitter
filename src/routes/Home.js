@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 const Home = ({ userObj }) => {
     const [gleet, setGleet] = useState("");
     const [gleets, setGleets] = useState([]);
+    const [attachment, setAttachment] = useState();
     useEffect(() => {
         dbService.collection("gleets").onSnapshot(snapshot => { //.collection("gleets").orderBy("createdAt","desc").onSnapshot(~~)
         // snapshot : 데이터베이스에 무슨일이 있을 때 알림을 받음
@@ -37,16 +38,25 @@ const Home = ({ userObj }) => {
         const theFile = files[0]; // 파일만들고
         const reader = new FileReader(); //파일리더기 만들고
         reader.onloadend = (finishedEvent) => {
-            console.log(finishedEvent);
+            const {currentTarget:{result},} = finishedEvent
+            setAttachment(result)
         }
         reader.readAsDataURL(theFile); //파일리더기로 파일 읽고
     };
+    const onClearAttatchment = () => setAttachment(null) //사진 미리보기 없애기
     return (
     <div>
         <form onSubmit={onSubmit}>
             <input value={gleet} onChange={onChange} type="text" placeholder="What's on your mind?" maxLength={120} />
             <input type="file" accept="image/*" onChange={onFileChnage}/>
             <input type="submit" value="Gleet" />
+            {attachment && (
+                <div>
+                    <img src={attachment} width="50px" height="50px" />
+                    <button onClick={onClearAttatchment}>Clear</button>
+                </div>
+            
+            )}
         </form>
         <div>
             {gleets.map(gleet => (
