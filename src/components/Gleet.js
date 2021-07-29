@@ -1,5 +1,5 @@
+import { useState } from "react";
 import { dbService } from "fbase";
-import React, {useState} from "react";
 
 const Gleet = ({gleetObj, isOwner}) => {
     const  [editing, setEditing] = useState(false); //edit mode 변경을 위해서
@@ -32,32 +32,36 @@ const Gleet = ({gleetObj, isOwner}) => {
 
     return (
         <div>
-            {editing? (
+          {editing ? (
+            <>
+              <form onSubmit={onSubmit}>
+                <input
+                  type="text"
+                  placeholder="Edit your nweet"
+                  value={newGleet}
+                  required
+                  onChange={onChange}
+                />
+                <input type="submit" value="Update Nweet" />
+              </form>
+              <button onClick={toggleEditing}>Cancel</button>
+            </>
+          ) : (
+            <>
+              <h4>{gleetObj.text}</h4>
+              {gleetObj.attachmentUrl && (
+                <img src={gleetObj.attachmentUrl} width="50px" height="50px" />
+              )}
+              {isOwner && (
                 <>
-                    {isOwner && (
-                        <>
-                            <form onSubmit={onSubmit}>
-                                <input onChange={onChange} type="text" placeholder="Edit your gleet" value={newGleet} required/>
-                                <input type="submit" value="Update" />
-                            </form>
-                            <button onClick={toggleEditing}>Cancel</button>
-                        </>
-                    )}
+                  <button onClick={onDeleteClick}>Delete Nweet</button>
+                  <button onClick={toggleEditing}>Edit Nweet</button>
                 </>
-                 ) : (
-                <>
-                    <h4>{gleetObj.text}</h4>
-                    {isOwner && 
-                        <>
-                            <button onClick={onDeleteClick}>Delete Gleet</button>
-                            <button onClick={toggleEditing}>Edit Gleet</button>
-                        </>
-                    }
-                </>
-                 )
-            }
+              )}
+            </>
+          )}
         </div>
-    )
-}
-
-export default Gleet;
+      );
+    };
+    
+    export default Gleet;
