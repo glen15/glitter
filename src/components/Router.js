@@ -17,7 +17,7 @@ const AppRouter =  ({ isLoggedIn, userObj }) => { //App.js의 return으로 가�
                         <Home userObj={userObj}/> {/* 로그인되어있으면 이쪽으로 */}
                     </Route>
                     <Route exact path="/profile">
-                        <Profile />
+                        <Profile userObj={userObj}/>
                     </Route>
                     <Redirect from="*" to="/" />
                 </>
