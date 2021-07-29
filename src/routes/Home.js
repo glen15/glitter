@@ -1,6 +1,7 @@
-import { dbService } from "fbase";
-import Gleet from "../components/Gleet";
 import React, { useEffect, useState } from "react";
+import {v4 as uuidv4} from "uuid";
+import { dbService, sotrageService } from "fbase";
+import Gleet from "../components/Gleet";
 
 const Home = ({ userObj }) => {
     const [gleet, setGleet] = useState("");
@@ -18,12 +19,16 @@ const Home = ({ userObj }) => {
     }, [])
     const onSubmit = async (event) => { //promise를 리턴하기 때문에 async 넣는다
         event.preventDefault(); //submit 클릭시 새로고침되는거 막으려고
-        await dbService.collection("gleets").add({
+        const fileRef = sotrageService.ref().child(`${userObj.uid}/${uuidv4()}`); // 파일에 대한 레퍼런스
+        const response = await fileRef.putString(attachment, "data_url") //readAsDataURL 했던게 data_url
+        console.log(response);
+
+        /* await dbService.collection("gleets").add({
             text: gleet, // 이 gleet는 위에 setState의 gleet값
             createdAt: Date.now(),
             creatorId: userObj.uid,
         });
-        setGleet(""); //submit 했으니 다시 비워주는 것
+        setGleet(""); //submit 했으니 다시 비워주는 것 */
     };
     const onChange = (event) => {
         const { 
