@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { authService, dbService } from "fbase";
 import { useHistory } from "react-router-dom";
 
-export default ({userObj}) => {
+export default ({refreshUser, userObj}) => {
     //데이터베이스를 필터링해서 여기서는 userObj.uid를 기준으로 저거랑 일치하는 것만 불러온것
     // const getMyGleets = async () => { 
     //     const gleets = await dbService
@@ -33,6 +33,7 @@ export default ({userObj}) => {
             await userObj.updateProfile({
                 displayName: newDisplayName
             });
+            refreshUser();//App에서 가져온 함수
         }
     };
     return (

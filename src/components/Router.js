@@ -5,7 +5,7 @@ import Home from "routes/Home";
 import Profile from "routes/Profile";
 import Navigation from "components/Navigation";
 
-const AppRouter =  ({ isLoggedIn, userObj }) => { //App.js의 return으로 가져온 props
+const AppRouter =  ({ refreshUser, isLoggedIn, userObj }) => { //App.js의 return으로 가져온 props
     return (
         <Router>
             {isLoggedIn && <Navigation userObj={userObj} />} 
@@ -17,7 +17,7 @@ const AppRouter =  ({ isLoggedIn, userObj }) => { //App.js의 return으로 가�
                         <Home userObj={userObj}/> {/* 로그인되어있으면 이쪽으로 */}
                     </Route>
                     <Route exact path="/profile">
-                        <Profile userObj={userObj}/>
+                        <Profile userObj={userObj} refreshUser={refreshUser}/> 
                     </Route>
                 </>
              ) : (
