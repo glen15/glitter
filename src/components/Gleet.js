@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { dbService } from "fbase";
+import { dbService, sotrageService } from "fbase";
 
 const Gleet = ({gleetObj, isOwner}) => {
     const  [editing, setEditing] = useState(false); //edit mode 변경을 위해서
@@ -11,6 +11,7 @@ const Gleet = ({gleetObj, isOwner}) => {
             await dbService.doc(`gleets/${gleetObj.id}`).delete(); //firebase
             //doc 의 id를 알고있기 때문에 가능했지. 이건 home에서 보내준 gleetObj덕분이고
             //gleets collection에서 id로 document를 찾아온거 / firebase callection 보면 확인가능
+            await sotrageService.refFromURL(gleetObj.attachmentUrl).delete(); // 사진도 storage에서 지우기
         }
     }
 
@@ -20,7 +21,7 @@ const Gleet = ({gleetObj, isOwner}) => {
     const onSubmit = async (event) => {
         event.preventDefault();
         await dbService.doc(`gleets/${gleetObj.id}`).update({
-            text: newGleet
+            text: newGleet,
         });
         setEditing(false)
     };

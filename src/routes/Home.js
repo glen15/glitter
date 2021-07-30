@@ -23,7 +23,7 @@ const Home = ({ userObj }) => {
         if (attachment !== ""){
             const attachmentRef = sotrageService
                 .ref()
-                .child(`${userObj.uid}/${uuidv4()}`); // 파일에 대한 레퍼런스
+                .child(`${userObj.uid}/${uuidv4()}`); // 파일에 대한 레퍼런스 refFromURL 메소드로 storage에서 찾을 수도 있다
             const response = await attachmentRef.putString(attachment, "data_url"); //readAsDataURL 했던게 data_url
             attachmentUrl = await response.ref.getDownloadURL();
         }
