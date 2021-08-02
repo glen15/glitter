@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { dbService, sotrageService } from "fbase";
 import {v4 as uuidv4} from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const GleetFactory = ({userObj}) => {
     const [gleet, setGleet] = useState("");
     const [attachment, setAttachment] = useState("");
     const onSubmit = async (event) => { //promise를 리턴하기 때문에 async 넣는다
+        if (gleet === "") {
+            return;
+          }
         event.preventDefault(); //submit 클릭시 새로고침되는거 막으려고
         let attachmentUrl = "";
         if (attachment !== ""){
@@ -44,17 +49,46 @@ const GleetFactory = ({userObj}) => {
         reader.readAsDataURL(theFile); //파일리더기로 파일 읽고
     };
     const onClearAttachment = () => setAttachment(""); //사진 미리보기 없애기
-    return (<form onSubmit={onSubmit}>
-        <input value={gleet} onChange={onChange} type="text" placeholder="What's on your mind?" maxLength={120} />
-        <input type="file" accept="image/*" onChange={onFileChange}/>
-        <input type="submit" value="Gleet" />
-        {attachment && (
-            <div>
-                <img src={attachment} width="50px" height="50px" />
-                <button onClick={onClearAttachment}>Clear</button>
+    return (
+        <form onSubmit={onSubmit} className="factoryForm">
+            <div className="factoryInput__container">
+                <input
+                className="factoryInput__input"
+                value={gleet}
+                onChange={onChange}
+                type="text"
+                placeholder="What's on your mind?"
+                maxLength={120}
+                />
+                <input type="submit" value="&rarr;" className="factoryInput__arrow" />
             </div>
-        )}
-</form>
+            <label for="attach-file" className="factoryInput__label">
+                <span>Add photos</span>
+                <FontAwesomeIcon icon={faPlus} />
+            </label>
+            <input id="attach-file"
+                type="file"
+                accept="image/*"
+                onChange={onFileChange}
+                style={{
+                opacity: 0,
+                }}
+            />
+        {attachment && (
+                <div className="factoryForm__attachment">
+                    <img
+                        src={attachment}
+                        style={{
+                        backgroundImage: attachment,
+                        }}
+                    />
+                    <div className="factoryForm__clear" onClick={onClearAttachment}>
+                        <span>Remove</span>
+                        <FontAwesomeIcon icon={faTimes} />
+                    </div>
+                </div>
+                 )}
+        </form>
     )}
 
 export default GleetFactory;

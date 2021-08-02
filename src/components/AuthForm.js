@@ -37,24 +37,30 @@ const AuthFrom = () => {
     const toogleAccount = () => setNewAccount(prev => !prev);
     return (
     <>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className="container">
             <input name="email" 
-            type="email" 
-            placeholder="Email" 
-            required 
-            value={email} 
-            onChange={onChange}/>
+                type="email" 
+                placeholder="Email" 
+                required 
+                value={email} 
+                onChange={onChange}
+                className="authInput"
+            />
             <input name="password" 
-            type="password" 
-            placeholder="Password" 
-            required 
-            value={password} 
-            onChange={onChange}/>
-            <input type="submit" 
-            value={newAccount ? "Create Account" : "Sign in"} />
-            {error}
+                type="password" 
+                placeholder="Password" 
+                required 
+                value={password} 
+                onChange={onChange}
+                className="authInput"
+            />
+            <input type="submit"
+                className="authInput authSubmit"
+                value={newAccount ? "Create Account" : "Sign in"}
+            />
+            {error && <span className="authError">{error}</span>}
         </form>
-            <span onClick={toogleAccount}>
+            <span onClick={toogleAccount} className="authSwitch">
                 {newAccount ? "Sign In" : "Create Account"}
             </span>
     </>

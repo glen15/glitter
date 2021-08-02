@@ -12,14 +12,23 @@ const AppRouter =  ({ refreshUser, isLoggedIn, userObj }) => { //App.js의 retur
             {/*  && : <Navigation/>이 존재하려면 isLoggedIn이 true여야한다 는 의미 */}
             <Switch>
                 {isLoggedIn ? (
-                <>
+                <div
+                style={{
+                  maxWidth: 890,
+                  width: "100%",
+                  margin: "0 auto",
+                  marginTop: 80,
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                >
                     <Route exact path="/">
                         <Home userObj={userObj}/> {/* 로그인되어있으면 이쪽으로 */}
                     </Route>
                     <Route exact path="/profile">
                         <Profile userObj={userObj} refreshUser={refreshUser}/> 
                     </Route>
-                </>
+                </div>
              ) : (
                 <>
                     <Route exact path="/">

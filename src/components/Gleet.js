@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { dbService, sotrageService } from "fbase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Gleet = ({gleetObj, isOwner}) => {
     const  [editing, setEditing] = useState(false); //edit mode 변경을 위해서
@@ -32,32 +34,38 @@ const Gleet = ({gleetObj, isOwner}) => {
     }
 
     return (
-        <div>
+        <div className="gleet">
           {editing ? (
             <>
-              <form onSubmit={onSubmit}>
+              <form onSubmit={onSubmit} className="container gleetEdit">
                 <input
                   type="text"
                   placeholder="Edit your nweet"
                   value={newGleet}
                   required
+                  autoFocus
                   onChange={onChange}
+                  className="formInput"
                 />
-                <input type="submit" value="Update Nweet" />
+                <input type="submit" value="Update Gleet" className="formBtn" />
               </form>
-              <button onClick={toggleEditing}>Cancel</button>
+              <span onClick={toggleEditing} className="formBtn cancelBtn">
+                Cancel
+              </span>
             </>
           ) : (
             <>
               <h4>{gleetObj.text}</h4>
-              {gleetObj.attachmentUrl && (
-                <img src={gleetObj.attachmentUrl} width="50px" height="50px" />
-              )}
+              {gleetObj.attachmentUrl && <img src={gleetObj.attachmentUrl} />}
               {isOwner && (
-                <>
-                  <button onClick={onDeleteClick}>Delete Nweet</button>
-                  <button onClick={toggleEditing}>Edit Nweet</button>
-                </>
+                <div className="gleet__actions">
+                  <span onClick={onDeleteClick}>
+                    <FontAwesomeIcon icon={faTrash} />
+                  </span>
+                  <span onClick={toggleEditing}>
+                    <FontAwesomeIcon icon={faPencilAlt} />
+                  </span>
+                </div>
               )}
             </>
           )}

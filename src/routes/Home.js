@@ -16,9 +16,9 @@ const Home = ({ userObj }) => {
         });
     }, []);
     return (
-    <div>
+    <div className="container">
        <GleetFactory userObj={userObj}/> 
-        <div>
+        <div style={{ marginTop: 30 }}>
             {gleets.map((gleet) => (
                 <Gleet
                     key={gleet.id} 
